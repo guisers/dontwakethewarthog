@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -28,6 +29,13 @@ public class PlayerScript : MonoBehaviour {
 			} else {
 				Camera.main.orthographicSize = 20;
 			}
+		}
+		var controls = GameObject.Find ("controls_screen").GetComponent<Image> ();
+		if (Input.GetKeyDown ("i")) {
+			controls.enabled = true;
+		}
+		if (controls.enabled && Input.GetKeyDown ("n")) {
+			controls.enabled = false;
 		}
 	}
 
