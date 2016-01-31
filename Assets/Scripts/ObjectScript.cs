@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,34 +11,31 @@ public class ObjectScript : MonoBehaviour {
 	public bool holdable = false;
 	private List<PlayerAction> actions = new List<PlayerAction>();
 
-	// Use this for initialization
 	void Start () {
 		if (holdable) {
-			gameObject.AddComponent<PlayerAction> ().setValues("hold", "h", -1, -1, "Hold h to pick up");
+			gameObject.AddComponent<PlayerAction> ().setValues("hold", "f", -1, -1, "Hold f to pick up", new List<string> ());
 		}
 		actions = GetComponents<PlayerAction> ().ToList<PlayerAction> ();
 	}
-	
-	// Update is called once per frame
+
 	void Update () {
-	
+		
 	}
 
-	void OnCollisionEnter2D(Collision2D coll) {
+
+	void OnCollisionStay2D(Collision2D coll) {
 		if (coll.gameObject.tag == "player") {
-			coll.gameObject.GetComponent<PlayerScript> ().setActions (actions);
-			coll.gameObject.GetComponent<PlayerScript> ().setCollided (this.gameObject);
-//			foreach (PlayerAction action in actions) {
-//				gameObject.AddComponent<Text> ().text = action.instruction;
-//			}
-
+			foreach (var action in gameObject.GetComponents<PlayerAction> ()) {
+				action.setActive (true);
+			}
 		}
-
-
 	}
+
 	void OnCollisionExit2D(Collision2D coll) {
 		if (coll.gameObject.tag == "player") {
-			coll.gameObject.GetComponent<PlayerScript> ().resetActions ();
+			foreach (var action in gameObject.GetComponents<PlayerAction> ()) {
+				action.setActive (false);
+			} 
 		}
 	}
 
