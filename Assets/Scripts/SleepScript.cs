@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using System;
+using UnityEngine.SceneManagement;
 
 public class SleepScript : MonoBehaviour {
 	
@@ -19,9 +20,9 @@ public class SleepScript : MonoBehaviour {
 	}
 	void Update () {
 		sleep_bar.transform.localScale = new Vector3 ((float)sleep, 1, 1);
-		if (sleep < 4) {
+		if (sleep < 8) {
 			sleep_bar.GetComponent<Image> ().color = HexToColor("E8000C");
-		} else if (sleep < 8) {
+		} else if (sleep < 12) {
 			sleep_bar.GetComponent<Image> ().color = HexToColor("FFCF00");
 		} else {
 			sleep_bar.GetComponent<Image> ().color = HexToColor("00B717");
@@ -30,20 +31,15 @@ public class SleepScript : MonoBehaviour {
 
 	void FixedUpdate(){
 		counter++;
-		sleep = 8 * Math.Sin(0.01 * counter) + 8;
+		sleep = 6 * Math.Sin(0.008 * counter) + 10;
 		noise = Math.Max (noise - 0.005, 0);
 		noise_bar.transform.localScale = new Vector3 ((float)noise, 1, 1);
 		sleep_bar.transform.localScale = new Vector3 ((float)sleep, 1, 1);
 
 		if (noise > sleep) {
 //			Application.LoadLevel("game_over");
-			var game_over = GameObject.Find ("game_over").GetComponent<Image> ();
-			game_over.enabled = true;
-			var taskManager = GameObject.Find ("top-left ui").GetComponent<TaskManager> ();
-			if (Input.GetKeyDown ("n")) {
-				taskManager.setStage ();
-				game_over.enabled = false;
-			}
+			var task_manager = GameObject.Find ("top-left ui").GetComponent<TaskManager> ();
+			task_manager.gameOver ();
 		}
 	}
 

@@ -9,14 +9,15 @@ public class TaskManager : MonoBehaviour {
 
 	private GameObject title;
 	private GameObject description;
+	private bool gameEnded;
 
 	private int stage;
 
 	void Start () {
-		stage = 1;
+		stage = GameObject.Find ("game settings").GetComponent<GameSettings> ().getStage ();
+		gameEnded = false;
 		title = GameObject.Find ("task title");
 		description = GameObject.Find ("task description");
-
 		setStage ();
 	}
 
@@ -26,6 +27,21 @@ public class TaskManager : MonoBehaviour {
 				setTaskVisibility (false);
 			} else {
 				setTaskVisibility (true);
+			}
+		}
+		if (stage ==0) {
+			if (Input.GetKeyDown ("n")) {
+				var start_screen = GameObject.Find ("start_screen").GetComponent<Image> ();
+				start_screen.enabled = false;
+				stage++;
+				setStage ();
+			}
+		} else if (gameEnded) {
+			if (Input.GetKeyDown ("n")) {
+				var game_over = GameObject.Find ("game_over").GetComponent<Image> ();
+				game_over.enabled = false;
+				gameEnded = false;
+				Application.LoadLevel("1");
 			}
 		}
 	}
@@ -41,10 +57,25 @@ public class TaskManager : MonoBehaviour {
 		stage++;
 		setStage ();
 	}
+
+	public void gameOver() {
+		var game_over = GameObject.Find ("game_over").GetComponent<Image> ();
+		game_over.enabled = true;
+		gameEnded = true;
+	}
+
+//	public void getStage() {
+//		return stage;
+//	}
 	public void setStage() {
+		GameObject.Find ("game settings").GetComponent<GameSettings> ().setStage (stage);
 		List<string> enableItemIds = new List<string> ();
 		List<string> disableItemIds = new List<string> ();
 		switch (stage) {
+		case 0:
+			var start_screen = GameObject.Find ("start_screen").GetComponent<Image> ();
+			start_screen.enabled = true;
+			break;
 		case 1:
 			title.GetComponent<Text> ().text = "eat the chips";
 			description.GetComponent<Text> ().text = "press t to close";
@@ -61,6 +92,7 @@ public class TaskManager : MonoBehaviour {
 			title.GetComponent<Text> ().text = "make a smoothie";
 			description.GetComponent<Text> ().text = "press t to close";
 			enableItemIds.Add ("birdhouse");
+			disableItemIds.Add ("wood");
 			GameObject.Find ("birdhouse").GetComponent<stickyUntilAppear> ().setActive (false);
 			break;
 		default:
@@ -80,6 +112,6 @@ public class TaskManager : MonoBehaviour {
 
 		GameObject.Find ("warthog").GetComponent<SleepScript> ().resetNoise ();
 		setTaskVisibility (true);
-
+		gameEnded = false;
 	}
 }

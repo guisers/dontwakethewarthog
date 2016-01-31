@@ -10,21 +10,36 @@ public class PlayerScript : MonoBehaviour {
 
 
 	void Start () {
-
+//		GetComponent<Rigidbody2D> ().isKinematic = true;
+//		GetComponent<Rigidbody> ().detectCollisions = true;
 	}
 
 	void Update () {
-
 		float inputX = Input.GetAxis("Horizontal");
 		float inputY = Input.GetAxis("Vertical");
 
 		movement = new Vector2(
 			speed.x * inputX,
 			speed.y * inputY);
+
+		if (Input.GetKeyDown ("z")) {
+			if (Camera.main.orthographicSize == 20) {
+				Camera.main.orthographicSize = 8;
+			} else {
+				Camera.main.orthographicSize = 20;
+			}
+		}
 	}
 
 	void FixedUpdate() {
 		GetComponent<Rigidbody2D>().velocity = movement;
+	}
+
+	void OnCollisionEnter2D(Collision2D coll) {
+		if (coll.gameObject.tag == "warthog") {
+			var task_manager = GameObject.Find ("top-left ui").GetComponent<TaskManager> ();
+			task_manager.gameOver ();
+		}
 	}
 
 }
