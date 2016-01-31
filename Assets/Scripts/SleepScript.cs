@@ -36,12 +36,16 @@ public class SleepScript : MonoBehaviour {
 		sleep_bar.transform.localScale = new Vector3 ((float)sleep, 1, 1);
 
 		if (noise > sleep) {
-			//			Application.LoadLevel("game_over");
+//			Application.LoadLevel("game_over");
+
 		}
 	}
 
 	public void incNoise(double decibels) {
 		noise += decibels;
+	}
+	public void resetNoise() {
+		noise = 0;
 	}
 
 	private Color HexToColor(string hex)
@@ -51,4 +55,6 @@ public class SleepScript : MonoBehaviour {
 		byte b = byte.Parse(hex.Substring(4,2), System.Globalization.NumberStyles.HexNumber);
 		return new Color32(r,g,b, 255);
 	}
+
+
 }
