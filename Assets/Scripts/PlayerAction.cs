@@ -63,7 +63,8 @@ public class PlayerAction : MonoBehaviour {
 //				if (details.ContainsKey("finish_image_switch")) {
 //					switchImage (details.TryGetValue("finish_image_switch"));
 //				}
-				GameObject.Find ("top-left ui").GetComponent<TaskManager> ().finishTask ();
+				var taskManager = GameObject.Find ("top-left ui").GetComponent<TaskManager> ();
+				taskManager.nextStage ();
 			}
 		}
 	}
@@ -92,6 +93,9 @@ public class PlayerAction : MonoBehaviour {
 			item_helper.GetComponent<Image> ().enabled = false;
 			textComponent.text = "";
 		}
+	}
+	public bool getActive() {
+		return active;
 	}
 
 }

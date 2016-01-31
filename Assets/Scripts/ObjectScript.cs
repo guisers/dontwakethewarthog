@@ -13,7 +13,7 @@ public class ObjectScript : MonoBehaviour {
 
 	void Start () {
 		if (holdable) {
-			gameObject.AddComponent<PlayerAction> ().setValues("hold", "f", -1, -1, "Hold f to pick up", new List<string> ());
+			gameObject.AddComponent<PlayerAction> ().setValues("hold", "f", -1, -1, "hold f to pick up", new List<string> ());
 		}
 		actions = GetComponents<PlayerAction> ().ToList<PlayerAction> ();
 	}
@@ -26,7 +26,9 @@ public class ObjectScript : MonoBehaviour {
 	void OnCollisionStay2D(Collision2D coll) {
 		if (coll.gameObject.tag == "player") {
 			foreach (var action in gameObject.GetComponents<PlayerAction> ()) {
-				action.setActive (true);
+				if (!action.getActive ()) {
+					action.setActive (true);
+				}
 			}
 		}
 	}

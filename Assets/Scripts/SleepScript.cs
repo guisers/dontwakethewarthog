@@ -37,7 +37,13 @@ public class SleepScript : MonoBehaviour {
 
 		if (noise > sleep) {
 //			Application.LoadLevel("game_over");
-
+			var game_over = GameObject.Find ("game_over").GetComponent<Image> ();
+			game_over.enabled = true;
+			var taskManager = GameObject.Find ("top-left ui").GetComponent<TaskManager> ();
+			if (Input.GetKeyDown ("n")) {
+				taskManager.setStage ();
+				game_over.enabled = false;
+			}
 		}
 	}
 

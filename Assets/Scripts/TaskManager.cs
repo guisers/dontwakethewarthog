@@ -13,11 +13,11 @@ public class TaskManager : MonoBehaviour {
 	private int stage;
 
 	void Start () {
-		stage = 0;
+		stage = 1;
 		title = GameObject.Find ("task title");
 		description = GameObject.Find ("task description");
 
-		finishTask ();
+		setStage ();
 	}
 
 	void Update () {
@@ -31,15 +31,17 @@ public class TaskManager : MonoBehaviour {
 	}
 
 	public void setTaskVisibility(bool visible) {
-		GameObject.Find ("top-left ui").GetComponent<Image> ().enabled = visible;
+//		GameObject.Find ("top-left ui").GetComponent<Image> ().enabled = visible;
 		title.GetComponent<Text> ().enabled = visible;
 		description.GetComponent<Text> ().enabled = visible;
-		GameObject.Find ("task header").GetComponent<Image> ().enabled = visible;
 		GameObject.Find ("frame").GetComponent<Image> ().enabled = visible;
 	}
 
-	public void finishTask() {
+	public void nextStage() {
 		stage++;
+		setStage ();
+	}
+	public void setStage() {
 		List<string> enableItemIds = new List<string> ();
 		List<string> disableItemIds = new List<string> ();
 		switch (stage) {
