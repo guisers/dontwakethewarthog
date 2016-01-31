@@ -64,6 +64,7 @@ public class TaskManager : MonoBehaviour {
 
 	public void gameOver() {
 		narrations [stage].Stop ();
+		GameObject.Find ("warthog").GetComponent<AudioSource> ().Stop (); 
 		var game_over = GameObject.Find ("game_over").GetComponent<Image> ();
 		game_over.enabled = true;
 		gameEnded = true;
@@ -76,6 +77,9 @@ public class TaskManager : MonoBehaviour {
 		List<string> enableItemIds = new List<string> ();
 		List<string> disableItemIds = new List<string> ();
 		narrations[stage].Play ();
+		if (!GameObject.Find("warthog").GetComponent<AudioSource> ().isPlaying) {
+			GameObject.Find ("warthog").GetComponent<AudioSource> ().Play ();
+		}
 		switch (stage) {
 		case 0:
 			var start_screen = GameObject.Find ("start_screen").GetComponent<Image> ();
@@ -83,12 +87,12 @@ public class TaskManager : MonoBehaviour {
 			break;
 		case 1:
 			title.GetComponent<Text> ().text = "eat the chips";
-			description.GetComponent<Text> ().text = "press z to zoom"+Environment.NewLine+"press t to close this box";
+			description.GetComponent<Text> ().text = "press i for instructions"+Environment.NewLine+"press t to close this box";
 			enableItemIds.Add ("chips");
 			break;
 		case 2:
 			title.GetComponent<Text> ().text = "build a birdhouse";
-			description.GetComponent<Text> ().text = "press z to zoom"+Environment.NewLine+"press t to close this box";
+			description.GetComponent<Text> ().text = "press i for instructions"+Environment.NewLine+"press t to close this box";
 			disableItemIds.Add ("chips");
 			enableItemIds.Add ("wood");
 			enableItemIds.Add ("hammer");

@@ -57,6 +57,9 @@ public class PlayerAction : MonoBehaviour {
 		}
 
 		if (Input.GetKeyDown (key)) {
+			if (!gameObject.GetComponent<AudioSource> ().isPlaying) {
+				gameObject.GetComponent<AudioSource> ().Play ();
+			}
 			addNoise ();
 			keys_to_finish--;
 			if (keys_to_finish <= 0) {
