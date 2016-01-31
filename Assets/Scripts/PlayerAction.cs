@@ -88,7 +88,7 @@ public class PlayerAction : MonoBehaviour {
 		if (active) {
 			item_helper.GetComponent<Image> ().enabled = true;
 			textComponent.text = textComponent.text.Insert(0, instruction+Environment.NewLine);
-			item_helper.transform.position = GameObject.Find ("Camera").GetComponent<Camera> ().WorldToScreenPoint (gameObject.transform.position);
+//			item_helper.transform.position = GameObject.Find ("Camera").GetComponent<Camera> ().WorldToScreenPoint (gameObject.transform.position);
 		} else {
 			item_helper.GetComponent<Image> ().enabled = false;
 			textComponent.text = "";
