@@ -76,7 +76,9 @@ public class TaskManager : MonoBehaviour {
 	public void setStage() {
 		List<string> enableItemIds = new List<string> ();
 		List<string> disableItemIds = new List<string> ();
-		narrations[stage].Play ();
+		if (stage < narrations.Count) {
+			narrations[stage].Play ();
+		}
 		if (!GameObject.Find("warthog").GetComponent<AudioSource> ().isPlaying) {
 			GameObject.Find ("warthog").GetComponent<AudioSource> ().Play ();
 		}
@@ -87,7 +89,7 @@ public class TaskManager : MonoBehaviour {
 			break;
 		case 1:
 			title.GetComponent<Text> ().text = "eat the chips";
-			description.GetComponent<Text> ().text = "press i for instructions"+Environment.NewLine+"press t to close this box";
+			description.GetComponent<Text> ().text = "press i for instructions" + Environment.NewLine + "press t to close this box";
 			enableItemIds.Add ("chips");
 			break;
 		case 2:
@@ -98,13 +100,20 @@ public class TaskManager : MonoBehaviour {
 			enableItemIds.Add ("hammer");
 			break;
 		case 3:
-			title.GetComponent<Text> ().text = "you're done the game";
-			description.GetComponent<Text> ().text = "more levels to come soon!";
-//			title.GetComponent<Text> ().text = "make a smoothie";
-//			description.GetComponent<Text> ().text = "press z to zoom"+Environment.NewLine+"press t to close this box";
+			title.GetComponent<Text> ().text = "shit, birds singing";
+			description.GetComponent<Text> ().text = "press i for instructions"+Environment.NewLine+"press t to close this box";
 			enableItemIds.Add ("birdhouse");
 			disableItemIds.Add ("wood");
+			disableItemIds.Add ("hammer");
 			GameObject.Find ("birdhouse").GetComponent<stickyUntilAppear> ().setActive (false);
+			enableItemIds.Add ("bird");
+//			enableItemIds.Add ("bird (1)");
+//			enableItemIds.Add ("bird (2)");
+			break;
+		case 4:
+			title.GetComponent<Text> ().text = "you're done the game";
+			description.GetComponent<Text> ().text = "more levels to come soon!";
+			disableItemIds.Add ("bird");
 			break;
 		default:
 			break;

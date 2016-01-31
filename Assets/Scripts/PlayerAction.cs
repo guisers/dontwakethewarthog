@@ -30,6 +30,7 @@ public class PlayerAction : MonoBehaviour {
 	}
 		
 	void Update () {
+//		gameObject.layer = LayerMask.NameToLayer ("Default");
 		if (!active)
 			return;
 
@@ -41,7 +42,8 @@ public class PlayerAction : MonoBehaviour {
 		if (id == "hold") {
 			if (Input.GetKey (key)) {
 				var player = GameObject.FindGameObjectWithTag ("player");
-				gameObject.transform.position = player.transform.Find ("holdslot").transform.position; 
+//				gameObject.layer = LayerMask.NameToLayer ("holding");
+				gameObject.transform.position = player.transform.Find ("holdslot").transform.position;
 			}
 			return;
 		}
@@ -57,11 +59,16 @@ public class PlayerAction : MonoBehaviour {
 		}
 
 		if (Input.GetKeyDown (key)) {
-			if (!gameObject.GetComponent<AudioSource> ().isPlaying) {
-				gameObject.GetComponent<AudioSource> ().Play ();
+			if (gameObject.GetComponent<AudioSource> ()) {
+				if (!gameObject.GetComponent<AudioSource> ().isPlaying) {
+					gameObject.GetComponent<AudioSource> ().Play ();
+				}
 			}
+
 			addNoise ();
 			keys_to_finish--;
+			var textComponent = GameObject.Find ("times_left").GetComponent<Text> ();
+			textComponent.text = keys_to_finish+" more!";
 			if (keys_to_finish <= 0) {
 //				if (details.ContainsKey("finish_image_switch")) {
 //					switchImage (details.TryGetValue("finish_image_switch"));
@@ -88,6 +95,7 @@ public class PlayerAction : MonoBehaviour {
 		active = activeness;
 		var item_helper = GameObject.Find ("item helper");
 		var textComponent = GameObject.Find ("item helper text").GetComponent<Text> ();
+		var timesLeft = GameObject.Find ("times_left").GetComponent<Text> ();
 		if (active) {
 			item_helper.GetComponent<Image> ().enabled = true;
 			textComponent.text = textComponent.text.Insert(0, instruction+Environment.NewLine);
@@ -95,6 +103,7 @@ public class PlayerAction : MonoBehaviour {
 		} else {
 			item_helper.GetComponent<Image> ().enabled = false;
 			textComponent.text = "";
+			timesLeft.text = "";
 		}
 	}
 	public bool getActive() {
