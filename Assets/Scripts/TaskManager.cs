@@ -58,10 +58,12 @@ public class TaskManager : MonoBehaviour {
 	public void nextStage() {
 		narrations [stage].Stop ();
 		stage++;
+		GameObject.Find ("game settings").GetComponent<GameSettings> ().setStage (stage);
 		setStage ();
 	}
 
 	public void gameOver() {
+		narrations [stage].Stop ();
 		var game_over = GameObject.Find ("game_over").GetComponent<Image> ();
 		game_over.enabled = true;
 		gameEnded = true;
@@ -71,7 +73,6 @@ public class TaskManager : MonoBehaviour {
 //		return stage;
 //	}
 	public void setStage() {
-		GameObject.Find ("game settings").GetComponent<GameSettings> ().setStage (stage);
 		List<string> enableItemIds = new List<string> ();
 		List<string> disableItemIds = new List<string> ();
 		narrations[stage].Play ();
@@ -93,8 +94,10 @@ public class TaskManager : MonoBehaviour {
 			enableItemIds.Add ("hammer");
 			break;
 		case 3:
-			title.GetComponent<Text> ().text = "make a smoothie";
-			description.GetComponent<Text> ().text = "press z to zoom"+Environment.NewLine+"press t to close this box";
+			title.GetComponent<Text> ().text = "you're done the game";
+			description.GetComponent<Text> ().text = "more levels to come soon!";
+//			title.GetComponent<Text> ().text = "make a smoothie";
+//			description.GetComponent<Text> ().text = "press z to zoom"+Environment.NewLine+"press t to close this box";
 			enableItemIds.Add ("birdhouse");
 			disableItemIds.Add ("wood");
 			GameObject.Find ("birdhouse").GetComponent<stickyUntilAppear> ().setActive (false);
