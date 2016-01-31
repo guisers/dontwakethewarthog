@@ -13,8 +13,11 @@ public class TaskManager : MonoBehaviour {
 
 	private int stage;
 
+	private List<AudioSource> narrations;
+
 	void Start () {
 		stage = GameObject.Find ("game settings").GetComponent<GameSettings> ().getStage ();
+		narrations =  GetComponents<AudioSource> ().ToList();
 		gameEnded = false;
 		title = GameObject.Find ("task title");
 		description = GameObject.Find ("task description");
@@ -33,8 +36,7 @@ public class TaskManager : MonoBehaviour {
 			if (Input.GetKeyDown ("n")) {
 				var start_screen = GameObject.Find ("start_screen").GetComponent<Image> ();
 				start_screen.enabled = false;
-				stage++;
-				setStage ();
+				nextStage ();
 			}
 		} else if (gameEnded) {
 			if (Input.GetKeyDown ("n")) {
@@ -54,6 +56,7 @@ public class TaskManager : MonoBehaviour {
 	}
 
 	public void nextStage() {
+		narrations [stage].Stop ();
 		stage++;
 		setStage ();
 	}
@@ -71,6 +74,7 @@ public class TaskManager : MonoBehaviour {
 		GameObject.Find ("game settings").GetComponent<GameSettings> ().setStage (stage);
 		List<string> enableItemIds = new List<string> ();
 		List<string> disableItemIds = new List<string> ();
+		narrations[stage].Play ();
 		switch (stage) {
 		case 0:
 			var start_screen = GameObject.Find ("start_screen").GetComponent<Image> ();
