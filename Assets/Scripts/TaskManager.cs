@@ -78,19 +78,19 @@ public class TaskManager : MonoBehaviour {
 			break;
 		case 1:
 			title.GetComponent<Text> ().text = "eat the chips";
-			description.GetComponent<Text> ().text = "press t to close";
+			description.GetComponent<Text> ().text = "press z to zoom"+Environment.NewLine+"press t to close this box";
 			enableItemIds.Add ("chips");
 			break;
 		case 2:
 			title.GetComponent<Text> ().text = "build a birdhouse";
-			description.GetComponent<Text> ().text = "press t to close";
+			description.GetComponent<Text> ().text = "press z to zoom"+Environment.NewLine+"press t to close this box";
 			disableItemIds.Add ("chips");
 			enableItemIds.Add ("wood");
 			enableItemIds.Add ("hammer");
 			break;
 		case 3:
 			title.GetComponent<Text> ().text = "make a smoothie";
-			description.GetComponent<Text> ().text = "press t to close";
+			description.GetComponent<Text> ().text = "press z to zoom"+Environment.NewLine+"press t to close this box";
 			enableItemIds.Add ("birdhouse");
 			disableItemIds.Add ("wood");
 			GameObject.Find ("birdhouse").GetComponent<stickyUntilAppear> ().setActive (false);
