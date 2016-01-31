@@ -12,7 +12,9 @@ public class stickyUntilAppear : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		gameObject.transform.position = GameObject.Find (destination).transform.position;
+		if (active) {
+			gameObject.transform.position = GameObject.Find (destination).transform.position;
+		}
 	}
 
 	public void setActive(bool activity) {
