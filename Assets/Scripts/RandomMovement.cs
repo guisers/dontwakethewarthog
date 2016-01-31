@@ -37,7 +37,13 @@ public class RandomMovement : MonoBehaviour {
 			counter++;
 			if (counter % 300 == 0) {
 				generateRandoms ();
+			} else if (counter % 800 == 0) {
+				GameObject.Find ("warthog").GetComponent<SleepScript> ().incNoise (1);
+				if (!gameObject.GetComponent<AudioSource> ().isPlaying) {
+					gameObject.GetComponent<AudioSource> ().Play ();
+				}
 			}
+
 			movement = new Vector2 (
 				speed.x * inputX,
 				speed.y * inputY);

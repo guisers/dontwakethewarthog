@@ -64,7 +64,11 @@ public class TaskManager : MonoBehaviour {
 
 	public void gameOver() {
 		narrations [stage].Stop ();
-		GameObject.Find ("warthog").GetComponent<AudioSource> ().Stop (); 
+		var warthog_sounds = GameObject.Find ("warthog").GetComponents<AudioSource> ().ToList ();
+		warthog_sounds[0].Stop ();
+		if (!warthog_sounds [1].isPlaying) {
+			warthog_sounds [1].Play ();
+		}
 		var game_over = GameObject.Find ("game_over").GetComponent<Image> ();
 		game_over.enabled = true;
 		gameEnded = true;
@@ -79,8 +83,9 @@ public class TaskManager : MonoBehaviour {
 		if (stage < narrations.Count) {
 			narrations[stage].Play ();
 		}
-		if (!GameObject.Find("warthog").GetComponent<AudioSource> ().isPlaying) {
-			GameObject.Find ("warthog").GetComponent<AudioSource> ().Play ();
+		var warthog_sounds = GameObject.Find ("warthog").GetComponents<AudioSource> ().ToList ();
+		if (!warthog_sounds[0].isPlaying) {
+			warthog_sounds[0].Play ();
 		}
 		switch (stage) {
 		case 0:
