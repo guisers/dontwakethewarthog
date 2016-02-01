@@ -87,7 +87,8 @@ public class PlayerAction : MonoBehaviour {
 		double add_noise = noise;
 		float distanceFromWarthog = Vector3.Distance (transform.position, GameObject.Find ("warthog").transform.position);
 		double distanceFactor = Convert.ToDouble (distanceFromWarthog) / 60;
-		add_noise *= 1 - distanceFactor;
+		add_noise = (1 - distanceFactor);
+		add_noise = Math.Pow (noise, add_noise);
 		GameObject.Find ("warthog").GetComponent<SleepScript> ().incNoise (add_noise);
 	}
 

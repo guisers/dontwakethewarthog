@@ -31,14 +31,19 @@ public class RandomMovement : MonoBehaviour {
 	}
 
 	void FixedUpdate() {
-		active = GetComponent<SpriteRenderer> ().enabled && 
-			!GetComponent<Collider2D> ().IsTouching(GameObject.FindGameObjectWithTag("player").GetComponent<Collider2D> ());
+//		active = GetComponent<SpriteRenderer> ().enabled && 
+//			!GetComponent<Collider2D> ().IsTouching(GameObject.FindGameObjectWithTag("player").GetComponent<Collider2D> ());
+		active = GetComponent<SpriteRenderer> ().enabled && !Input.GetKeyDown ("f");
 		if (active){
 			counter++;
 			if (counter % 300 == 0) {
 				generateRandoms ();
-			} else if (counter % 800 == 0) {
-				GameObject.Find ("warthog").GetComponent<SleepScript> ().incNoise (1);
+//				GameObject.Find ("warthog").GetComponent<SleepScript> ().incNoise (2);
+//				if (!gameObject.GetComponent<AudioSource> ().isPlaying) {
+//					gameObject.GetComponent<AudioSource> ().Play ();
+//				}
+			} else if (counter % 100 == 0) {
+				GameObject.Find ("warthog").GetComponent<SleepScript> ().incNoise (2);
 				if (!gameObject.GetComponent<AudioSource> ().isPlaying) {
 					gameObject.GetComponent<AudioSource> ().Play ();
 				}
